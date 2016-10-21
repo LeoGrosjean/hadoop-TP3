@@ -1,0 +1,15 @@
+To use my Database :
+use lgrosjeandb;
+
+My table is table_prenom
+
+
+requette 1:
+select b.origineuh, sum(b.sommeuh) from (select trim(a.expld) as origineuh, count(a.expld) as sommeuh from (SELECT explode(origin) as expld FROM table_prenom) as a group by expld) as b group by origineuh;
+
+requette 2:
+select a.taille, sum(a.total) from (select size(origin) as taille, count(size(origin)) as total from table_prenom group by origin) as a group by taille;
+
+
+requette 3:
+select b.sexeuh, b.totalleuh*100/Sum(count(a.prenom)) from (select trim(a.expld) as sexeuh, count(a.expld) as totalleuh from (SELECT explode(gender) as expld FROM table_prenom) as a group by expld,select count(*) as total from a) as b);
